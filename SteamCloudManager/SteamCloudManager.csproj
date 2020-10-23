@@ -5,7 +5,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
     <StartupObject>SteamCloudManager.App</StartupObject>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
     <Authors>Jochem-W</Authors>
     <NeutralLanguage>en-GB</NeutralLanguage>
     <Platforms>x64;x86</Platforms>
