@@ -7,7 +7,7 @@ namespace SteamCloudManager
     {
         public string Name { get; }
 
-        public int Size { get; }
+        public string Size { get; }
 
         public DateTime Time { get; }
 
@@ -24,7 +24,7 @@ namespace SteamCloudManager
             Exists = SteamRemoteStorage.FileExists(filename);
             Name = filename;
             Persisted = SteamRemoteStorage.FilePersisted(filename);
-            Size = SteamRemoteStorage.FileSize(filename);
+            Size = Utils.GetProperSize(SteamRemoteStorage.FileSize(filename));
             Time = SteamRemoteStorage.FileTime(filename);
         }
     }

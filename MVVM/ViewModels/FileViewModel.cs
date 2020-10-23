@@ -25,12 +25,18 @@ namespace SteamCloudManager.MVVM.ViewModels
 
         public IList<RemoteFile> SelectedFiles { get; set; }
 
+        public string RemainingStorage
+        {
+            get => $"{Utils.GetProperSize(SteamRemoteStorage.QuotaUsedBytes)}/{Utils.GetProperSize(SteamRemoteStorage.QuotaBytes)} ({Utils.GetProperSize(SteamRemoteStorage.QuotaRemainingBytes)} remaining)";
+        }
+
         public void Refresh()
         {
             IList<RemoteFile> files = new List<RemoteFile>();
             foreach (var file in SteamRemoteStorage.Files)
                 files.Add(new RemoteFile(file));
             SetFiles(files);
+            OnPropertyChanged("RemainingStorage");
         }
 
         public void SetFiles(IList<RemoteFile> files)
