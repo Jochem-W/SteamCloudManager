@@ -9,6 +9,8 @@
     <Authors>Jochem-W</Authors>
     <NeutralLanguage>en-GB</NeutralLanguage>
     <Platforms>x64</Platforms>
+    <RepositoryUrl>https://github.com/Jochem-W/SteamCloudManager</RepositoryUrl>
+    <PackageLicenseExpression>GPL-3.0</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
