@@ -8,22 +8,28 @@
     <Version>1.1.0</Version>
     <Authors>Jochem-W</Authors>
     <NeutralLanguage>en-GB</NeutralLanguage>
-    <Platforms>x64</Platforms>
+    <Platforms>x64;x86</Platforms>
     <RepositoryUrl>https://github.com/Jochem-W/SteamCloudManager</RepositoryUrl>
     <PackageLicenseExpression>GPL-3.0</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Facepunch.Steamworks" Version="2.3.3">
-      <GeneratePathProperty>true</GeneratePathProperty>
-    </PackageReference>
     <PackageReference Include="MaterialDesignThemes" Version="3.2.0" />
     <PackageReference Include="ShowMeTheXAML" Version="2.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition=" '$(Platform)' == 'x64' ">
+    <PackageReference GeneratePathProperty="true" Include="Facepunch.Steamworks" Version="2.3.3" />
+    <None Remove="steam_api.dll" />
     <None Include="$(PkgFacepunch_Steamworks)\content\steam_api64.dll">
       <Link>steam_api64.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(Platform)' == 'x86' ">
+    <PackageReference GeneratePathProperty="true" Include="Facepunch.Steamworks.win32" Version="2.3.3" />
+    <None Update="steam_api.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
