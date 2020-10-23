@@ -1,6 +1,3 @@
-# SteamCloudManager
-Manage Steam Cloud files with ease
-
 # How to use
 1. Extract the latest release
 2. Open SteamCloudManager.exe
