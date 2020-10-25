@@ -9,7 +9,7 @@ namespace SteamCloudManager
 
         public static string GetProperSize(int size)
         {
-            return GetProperSize((ulong)size);
+            return WithSizeUnits((ulong)size);
         }
 
         public static string GetProperSize(long size)
@@ -19,7 +19,7 @@ namespace SteamCloudManager
             return GetProperSize(size);
         }
 
-        public static string GetProperSize(ulong size)
+        public static string WithSizeUnits(ulong size)
         {
             var power = 0;
             if (size < 1000)

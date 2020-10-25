@@ -9,12 +9,13 @@
         mc:Ignorable="d"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{materialDesign:MaterialDesignFont}"
+        Height="540"
         ResizeMode="CanMinimize"
-        SizeToContent="WidthAndHeight"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
-        Title="Steam Cloud Manager">
+        Title="Steam Cloud Manager"
+        Width="960">
 
     <Window.DataContext>
         <local:MainViewModel />
@@ -23,14 +24,22 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="12" />
-            <ColumnDefinition Width="192" />
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="12" />
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="12" />
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="12" />
+            <ColumnDefinition />
             <ColumnDefinition Width="12" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="12" />
             <RowDefinition Height="48" />
             <RowDefinition Height="12" />
-            <RowDefinition Height="48" />
+            <RowDefinition />
+            <RowDefinition Height="12" />
+            <RowDefinition Height="36" />
             <RowDefinition Height="12" />
         </Grid.RowDefinitions>
         <TextBox
@@ -41,9 +50,42 @@
                 Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
                 materialDesign:HintAssist.Hint="Steam App ID" />
         <Button
+                Grid.Column="3"
+                Grid.Row="1"
+                Content="Connect"
+                Click="Connect"
+                VerticalAlignment="Bottom" />
+        <DataGrid
                 Grid.Column="1"
+                Grid.ColumnSpan="7"
                 Grid.Row="3"
-                Content="Browse"
-                Click="Browse" />
+                ItemsSource="{Binding Files}"
+                SelectionChanged="SelectionChanged" />
+        <Label
+                Grid.Column="7"
+                Grid.Row="5"
+                Content="{Binding RemainingStorage}"
+                VerticalAlignment="Center" />
+        <Button
+                Grid.Column="1"
+                Grid.Row="5"
+                Click="Download"
+                Content="Download"
+                Name="DownloadButton"
+                IsEnabled="False" />
+        <Button
+                Grid.Column="3"
+                Grid.Row="5"
+                Click="Delete"
+                Content="Delete"
+                Name="DeleteButton"
+                IsEnabled="False" />
+        <Button
+                Grid.Column="5"
+                Grid.Row="5"
+                Click="Upload"
+                Content="Upload"
+                Name="UploadButton"
+                IsEnabled="False" />
     </Grid>
 </Window>
