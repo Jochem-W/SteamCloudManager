@@ -21,10 +21,7 @@ namespace SteamTools
             await CheckForUpdates();
         }
 
-        private async void Application_Exit(object sender, ExitEventArgs e)
-        {
-            await Task.Run(() => SteamClient.Shutdown());
-        }
+        private async void Application_Exit(object sender, ExitEventArgs e) => await Task.Run(() => SteamClient.Shutdown());
 
         private static async Task CheckForUpdates()
         {
