@@ -1,21 +1,21 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
-    <StartupObject>SteamCloudManager.App</StartupObject>
-    <Version>1.2.0</Version>
+    <StartupObject>SteamTools.App</StartupObject>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <Authors>Jochem-W</Authors>
+    <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/Jochem-W/LeagueBulkConvert</RepositoryUrl>
     <NeutralLanguage>en-GB</NeutralLanguage>
     <Platforms>x64;x86</Platforms>
-    <RepositoryUrl>https://github.com/Jochem-W/SteamCloudManager</RepositoryUrl>
-    <PackageLicenseExpression>GPL-3.0</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="MaterialDesignThemes" Version="3.2.0" />
-    <PackageReference Include="ShowMeTheXAML" Version="2.0.0" />
+    <PackageReference Include="ShowMeTheXAML.MSBuild" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(Platform)' == 'x64' ">

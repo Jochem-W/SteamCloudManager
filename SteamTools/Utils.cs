@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SteamCloudManager
+namespace SteamTools
 {
-    static class Utils
+    class Utils
     {
         private static readonly IList<string> SizeSuffixes = new List<string> { "bytes", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB" };
 
-        public static string GetProperSize(int size)
-        {
-            return WithSizeUnits((ulong)size);
-        }
+        public static string GetProperSize(int size) => WithSizeUnits((ulong)size);
 
         public static string GetProperSize(long size)
         {

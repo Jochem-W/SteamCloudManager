@@ -1,21 +1,28 @@
-﻿using Steamworks;
+﻿using SteamTools.Views;
+using Steamworks;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 
-namespace SteamCloudManager.MVVM.ViewModels
+namespace SteamTools.ViewModels
 {
-    class MainViewModel : INotifyPropertyChanged
+    class CloudWindowViewModel : INotifyPropertyChanged
     {
-        public string AppId { get; set; }
+        private readonly Command deleteCommand;
+        public ICommand DeleteCommand => deleteCommand;
+
+        private readonly Command downloadCommand;
+        public ICommand DownloadCommand => downloadCommand;
+
 
         private ObservableCollection<RemoteFile> files;
         public ObservableCollection<RemoteFile> Files
         {
             get => files;
-
             set
             {
                 {
@@ -27,19 +34,25 @@ namespace SteamCloudManager.MVVM.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public string RemainingStorage
-        {
-            get
-            {
-                if (SteamClient.IsValid)
-                    return $"{Utils.WithSizeUnits(SteamRemoteStorage.QuotaUsedBytes)}/" +
+        public static string RemainingStorage => $"{Utils.WithSizeUnits(SteamRemoteStorage.QuotaUsedBytes)}/" +
                         $"{Utils.WithSizeUnits(SteamRemoteStorage.QuotaBytes)} (" +
                         $"{Utils.WithSizeUnits(SteamRemoteStorage.QuotaRemainingBytes)} remaining)";
-                return string.Empty;
+
+        private IList<RemoteFile> selectedFiles = new List<RemoteFile>();
+        public IList<RemoteFile> SelectedFiles
+        {
+            get => selectedFiles;
+            set
+            {
+                selectedFiles = value;
+                deleteCommand.RaiseCanExecuteChanged();
+                downloadCommand.RaiseCanExecuteChanged();
+                uploadCommand.RaiseCanExecuteChanged();
             }
         }
 
-        public IList<RemoteFile> SelectedFiles { get; set; }
+        private readonly Command uploadCommand;
+        public ICommand UploadCommand => uploadCommand;
 
         public void Refresh()
         {
@@ -68,6 +81,27 @@ namespace SteamCloudManager.MVVM.ViewModels
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        public CloudWindowViewModel()
+        {
+            deleteCommand = new Command(_ =>
+            {
+                foreach (var file in SelectedFiles)
+                    file.Delete();
+                Refresh();
+            }, () => selectedFiles.Count > 0);
+            downloadCommand = new Command(async _ =>
+            {
+                foreach (var file in SelectedFiles)
+                    await File.WriteAllBytesAsync(file.Name, file.Read());
+            }, () => selectedFiles.Count > 0);
+            uploadCommand = new Command(_ =>
+            {
+                new UploadWindow().ShowDialog();
+                Refresh();
+            }, () => true);
+            Refresh();
         }
     }
 }
