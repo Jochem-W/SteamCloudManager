@@ -1,7 +1,7 @@
 ﻿using Steamworks;
 using System;
 
-namespace SteamTools
+namespace SteamTools.Types
 {
     public class RemoteFile
     {

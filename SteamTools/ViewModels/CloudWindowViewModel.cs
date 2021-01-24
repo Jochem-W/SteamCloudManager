@@ -1,4 +1,5 @@
-﻿using SteamTools.Views;
+﻿using SteamTools.Types;
+using SteamTools.Views;
 using Steamworks;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

@@ -1,4 +1,5 @@
-﻿using SteamTools.ViewModels;
+﻿using SteamTools.Types;
+using SteamTools.ViewModels;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
