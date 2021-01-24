@@ -17,5 +17,5 @@
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Title="Achievements"
         Width="1280">
-    <DataGrid ItemsSource="{Binding Achievements}"/>
+    <DataGrid ItemsSource="{Binding Achievements}" />
 </Window>

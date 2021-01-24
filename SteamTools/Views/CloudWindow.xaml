@@ -37,13 +37,13 @@
                 Margin="6"
                 Grid.Row="1"
                 Command="{Binding DownloadCommand}"
-                Content="Download"/>
+                Content="Download" />
         <Button
                 Margin="6"
                 Grid.Column="1"
                 Grid.Row="1"
                 Command="{Binding DeleteCommand}"
-                Content="Delete"/>
+                Content="Delete" />
         <Button
                 Margin="6"
                 Grid.Column="2"
