@@ -11,10 +11,12 @@
     <RepositoryUrl>https://github.com/Jochem-W/LeagueBulkConvert</RepositoryUrl>
     <NeutralLanguage>en-GB</NeutralLanguage>
     <Platforms>x64;x86</Platforms>
+    <Version>2.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="MaterialDesignThemes" Version="3.2.0" />
+    <PackageReference Include="Octokit" Version="0.48.0" />
     <PackageReference Include="ShowMeTheXAML.MSBuild" Version="2.0.0" />
   </ItemGroup>
 
