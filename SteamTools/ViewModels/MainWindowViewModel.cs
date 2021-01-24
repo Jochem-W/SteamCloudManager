@@ -55,6 +55,11 @@ namespace SteamTools.ViewModels
                 {
                     try
                     {
+                        if (Connected)
+                        {
+                            Connected = false;
+                            await Task.Run(() => SteamClient.Shutdown());
+                        }
                         await Task.Run(() => SteamClient.Init(appId.Value));
                         Connected = true;
                     }
