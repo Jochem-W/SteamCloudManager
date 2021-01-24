@@ -53,7 +53,6 @@ namespace SteamTools.Types
             var value = icon.Value;
             var width = (int)value.Width;
             var height = (int)value.Height;
-            var writeableBitmap = new WriteableBitmap(width, height, 72, 72, PixelFormats.Bgra32, null);
             var pixels = value.Data;
             for (var i = 0; i < pixels.Length; i += 4)
             {
@@ -61,6 +60,7 @@ namespace SteamTools.Types
                 pixels[i] = pixels[i + 2];
                 pixels[i + 2] = r;
             }
+            var writeableBitmap = new WriteableBitmap(width, height, 72, 72, PixelFormats.Bgra32, null);
             writeableBitmap.WritePixels(new Int32Rect(0, 0, width, height), pixels, 4 * width, 0);
             writeableBitmap.Freeze();
             Icon = writeableBitmap;
