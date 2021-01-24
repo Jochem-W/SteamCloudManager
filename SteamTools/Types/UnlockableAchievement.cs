@@ -1,17 +1,15 @@
 ﻿using Steamworks.Data;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace SteamTools.Types
 {
-    class UnlockableAchievement
+    class UnlockableAchievement : INotifyPropertyChanged
     {
         private Achievement achievement;
-
 
         private WriteableBitmap icon;
         public WriteableBitmap Icon
@@ -21,6 +19,11 @@ namespace SteamTools.Types
                 if (icon == null)
                     LoadIcon();
                 return icon;
+            }
+            private set
+            {
+                icon = value;
+                OnPropertyChanged();
             }
         }
 
@@ -40,24 +43,32 @@ namespace SteamTools.Types
 
         public string Description => achievement.Description;
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public async void LoadIcon()
         {
             var icon = await achievement.GetIconAsync();
-            if (icon == null)
+            if (!icon.HasValue)
                 return;
-            var writeableBitmap = new WriteableBitmap((int)icon.Value.Width, (int)icon.Value.Height, 72, 72, PixelFormats.Bgra32, null);
-            IList<byte> pixels = new List<byte>((int)(icon.Value.Height * icon.Value.Width * 4));
-            for (var x = 0; x < icon.Value.Width; x++)
-                for (var y = 0; y < icon.Value.Height; y++)
-                {
-                    var colour = icon.Value.GetPixel(x, y);
-                    pixels.Add(colour.b);
-                    pixels.Add(colour.g);
-                    pixels.Add(colour.r);
-                    pixels.Add(colour.a);
-                }
-            writeableBitmap.WritePixels(new Int32Rect(0, 0, (int)icon.Value.Width, (int)icon.Value.Height), pixels.ToArray(), 4 * (int)icon.Value.Width, 0);
-            this.icon = writeableBitmap;
+            var value = icon.Value;
+            var width = (int)value.Width;
+            var height = (int)value.Height;
+            var writeableBitmap = new WriteableBitmap(width, height, 72, 72, PixelFormats.Bgra32, null);
+            var pixels = value.Data;
+            for (var i = 0; i < pixels.Length; i += 4)
+            {
+                var r = pixels[i];
+                pixels[i] = pixels[i + 2];
+                pixels[i + 2] = r;
+            }
+            writeableBitmap.WritePixels(new Int32Rect(0, 0, width, height), pixels, 4 * width, 0);
+            writeableBitmap.Freeze();
+            Icon = writeableBitmap;
+        }
+
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
         public UnlockableAchievement(Achievement achievement)
